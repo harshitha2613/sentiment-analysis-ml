@@ -1,5 +1,6 @@
 import pandas as pd
 import random
+from datetime import datetime, timedelta
 
 states = ["Karnataka", "Tamil Nadu", "Delhi", "Maharashtra", "Kerala"]
 districts = ["Bangalore", "Chennai", "New Delhi", "Mumbai", "Kochi"]
@@ -31,6 +32,8 @@ neutral_texts = [
 
 data = []
 
+start_date = datetime(2024, 1, 1)
+
 for i in range(1000):
     state = random.choice(states)
     district = random.choice(districts)
@@ -45,10 +48,14 @@ for i in range(1000):
     else:
         text = random.choice(neutral_texts)
 
-    data.append([state, district, party, text])
+    # Random date generation
+    random_days = random.randint(0, 365)
+    date = start_date + timedelta(days=random_days)
 
-df = pd.DataFrame(data, columns=["state", "district", "party", "text"])
+    data.append([date, state, district, party, text])
+
+df = pd.DataFrame(data, columns=["date", "state", "district", "party", "text"])
 
 df.to_csv("data.csv", index=False)
 
-print("Dataset with 1000 rows created successfully!")
+print("Dataset with date column created!")
