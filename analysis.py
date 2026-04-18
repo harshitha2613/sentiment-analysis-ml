@@ -9,7 +9,6 @@ print("Election Sentiment Analysis Started")
 
 df = pd.read_csv("data.csv")
 
-# Convert date column
 df['date'] = pd.to_datetime(df['date'])
 
 print("\nDataset Loaded:")
