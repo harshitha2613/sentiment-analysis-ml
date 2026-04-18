@@ -9,6 +9,9 @@ print("Election Sentiment Analysis Started")
 
 df = pd.read_csv("data.csv")
 
+# Convert date column
+df['date'] = pd.to_datetime(df['date'])
+
 print("\nDataset Loaded:")
 print(df.head())
 
@@ -42,6 +45,8 @@ plt.show()
 state_score = df.groupby('state')['score'].sum()
 state_score.plot(kind='bar')
 plt.title("State-wise Sentiment Score")
+plt.xlabel("State")
+plt.ylabel("Score")
 plt.show()
 
 district_party = df.groupby(['district', 'party'])['score'].sum().unstack()
@@ -51,6 +56,7 @@ print(district_party)
 
 district_party.plot(kind='bar')
 plt.title("District-wise Party Sentiment")
+plt.ylabel("Score")
 plt.show()
 
 state_map = df.groupby('state')['score'].sum().reset_index()
@@ -65,6 +71,22 @@ fig = px.choropleth(
 
 fig.show()
 
+trend = df.groupby('date').size()
+
+trend.plot()
+plt.title("Tweet Trend Over Time")
+plt.xlabel("Date")
+plt.ylabel("Number of Tweets")
+plt.show()
+
+party_trend = df.groupby(['date', 'party']).size().unstack()
+
+party_trend.plot()
+plt.title("Party-wise Trend Over Time")
+plt.xlabel("Date")
+plt.ylabel("Tweet Count")
+plt.show()
+
 print("\nReal-time Prediction")
 
 user_text = input("Enter tweet: ")
@@ -72,5 +94,7 @@ party = input("Enter party: ")
 
 sentiment, score = get_sentiment(user_text)
 
-print("Sentiment:", sentiment)
+print("Predicted Sentiment:", sentiment)
 print(f"Impact for {party}:", score)
+
+print("\nProject Completed")
