@@ -95,5 +95,3 @@ sentiment, score = get_sentiment(user_text)
 
 print("Predicted Sentiment:", sentiment)
 print(f"Impact for {party}:", score)
-
-print("\nProject Completed")
